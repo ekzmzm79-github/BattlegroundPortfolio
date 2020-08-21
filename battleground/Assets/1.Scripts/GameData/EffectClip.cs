@@ -20,9 +20,9 @@ public class EffectClip
      * 1. 해당 파일까지의 경로 string,
      * 2. 해당 파일의 이름 string 으로 나눠서 저장하는 것이 좋다.
      */
-    public string effectName = "";
-    public string effectPath = "";
-    public string effectFullPath = "";
+    public string effectName = string.Empty;
+    public string effectPath = string.Empty;
+    public string effectFullPath = string.Empty;
     #endregion Variable
 
     #region Constructor
@@ -34,7 +34,7 @@ public class EffectClip
     public void PreLoad()
     {
         this.effectFullPath = effectPath + effectName;
-        if(this.effectFullPath == "")
+        if(this.effectFullPath == string.Empty)
         {
             Debug.LogError("EffectClip/PreLoad effectFullPath is Empty!");
             return;
@@ -63,7 +63,7 @@ public class EffectClip
         if(this.effectPrefab == null)
         {
             this.PreLoad();
-            if (this.effectPrefab == null)
+            if (this.effectPrefab == null) //에러
                 return null;
         }
 

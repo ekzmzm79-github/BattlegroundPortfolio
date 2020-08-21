@@ -56,6 +56,7 @@ public class BaseData : ScriptableObject
 
     /// <summary>
     /// 툴에 출력하기 위한 이름 목록을 리턴.
+    /// showID == true ? 인덱스 추가시켜서 리턴 : 이름만 리턴 
     /// </summary>
     public string[] GetNameList(bool showID, string filterWord = "")
     {
@@ -88,7 +89,7 @@ public class BaseData : ScriptableObject
 
             if (showID)
             {
-                //showID가 트루라면 해당 데이터의 인덱스를 포함시킨다.
+                //showID가 트루라면 해당 인덱스의 데이터를 포함시킨다.
                 retList[i] = i.ToString() + " : " + this.names[i];
             }
             else
