@@ -135,7 +135,9 @@ public class EffectTool : EditorWindow
 
     }
 
-
+    /// <summary>
+    /// data의 정보를 string으로 한줄씩 enumStructure로 만들고 각 리스트.cs로 생성
+    /// </summary>
     public void CreateEnumStructure()
     {
         string enumName = "EffectList";

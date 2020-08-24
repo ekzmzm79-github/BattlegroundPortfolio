@@ -33,6 +33,34 @@ public class EffectData : BaseData
     #region Method
     //읽기, 저장, 삭제, 클립을 얻고 복사하는 메소드 구현 예정
 
+
+    /// <summary>
+    /// this의 각 필드를 xml 외부 파일로 저장
+    /// </summary>
+    public void SaveData()
+    {
+        using (XmlTextWriter xml = new XmlTextWriter(xmlFilePath + xmlFileName, System.Text.Encoding.Unicode))
+        {
+            xml.WriteStartDocument();
+            xml.WriteStartElement(EFFECT);
+            xml.WriteElementString("length", GetDataCount().ToString());
+            for (int i = 0; i < this.names.Length; i++)
+            {
+                EffectClip clip = this.effectClips[i];
+                xml.WriteStartElement(CLIP);
+                xml.WriteElementString("id", i.ToString());
+                xml.WriteElementString("name", this.names[i]);
+                xml.WriteElementString("effectType", clip.effectType.ToString());
+                xml.WriteElementString("effectName", clip.effectName);
+                xml.WriteElementString("effectPath", clip.effectPath);
+                xml.WriteEndElement();
+            }
+            xml.WriteEndElement();
+            xml.WriteEndDocument();
+        }
+    }
+
+
     /// <summary>
     /// xml 형식의 외부 데이터를 Load해서 this의 각 필드에 매핑
     /// </summary>
@@ -44,7 +72,7 @@ public class EffectData : BaseData
         TextAsset asset = ResourceManager.Load(dataPath) as TextAsset;
         if (asset == null || asset.text == null)
         {
-            this.AddData("New Effect");
+            this.AddData("NewEffect");
             return;
         }
 
@@ -90,31 +118,7 @@ public class EffectData : BaseData
             }
         }
     }
-    /// <summary>
-    /// this의 각 필드를 xml 외부 파일로 저장
-    /// </summary>
-    public void SaveData()
-    {
-        using (XmlTextWriter xml = new XmlTextWriter(xmlFilePath + xmlFileName, System.Text.Encoding.Unicode))
-        {
-            xml.WriteStartDocument();
-            xml.WriteStartElement(EFFECT);
-            xml.WriteElementString("length", GetDataCount().ToString());
-            for(int i =0; i<this.names.Length; i++)
-            {
-                EffectClip clip = this.effectClips[i];
-                xml.WriteStartElement(CLIP);
-                xml.WriteElementString("id", i.ToString());
-                xml.WriteElementString("name", this.names[i]);
-                xml.WriteElementString("effectType", clip.effectType.ToString());
-                xml.WriteElementString("effectName", clip.effectName);
-                xml.WriteElementString("effectPath", clip.effectPath);
-                xml.WriteEndElement();
-            }
-            xml.WriteEndElement();
-            xml.WriteEndDocument();
-        }
-    }
+    
 
     /// <summary>
     /// newName 이름의 새로운 데이터를 추가하는 메소드
@@ -184,7 +188,7 @@ public class EffectData : BaseData
         clip.effectName = original.effectName;
         clip.effectType = original.effectType;
         clip.effectPath = original.effectPath;
-        clip.realId = original.realId;
+        clip.realId = effectClips.Length;
         //clip.effectPrefab = original.effectPrefab;
         return clip;
     }
