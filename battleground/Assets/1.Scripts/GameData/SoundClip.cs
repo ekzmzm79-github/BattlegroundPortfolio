@@ -24,7 +24,7 @@ public class SoundClip
     public AudioRolloffMode rolloffMode = AudioRolloffMode.Logarithmic;
     public float minDistance = 10000.0f;
     public float maxDistance = 50000.0f;
-    public float spartialBlend = 1.0f;
+    public float spatialBlend = 1.0f;
 
     public float fadeTime1 = 0.0f;
     public float fadeTime2 = 0.0f;
@@ -105,13 +105,13 @@ public class SoundClip
         }
     }
 
+    /// <summary>
+    /// 현재 source의 재생 시간이 사전에 설정한 반복 구간 시간을 넘어가 같다면,
+    /// source의 재생 시간을 전에 설정한 setTime(시작부분)으로 설정해서 루프를 세팅
+    /// </summary>
     public void CheckLoop(AudioSource source)
     {
-        /*
-         * 현재 source의 재생 시간이 사전에 설정한 반복 구간 시간을 넘어가 같다면,
-         * source의 재생 시간을 전에 설정한 setTime(시작부분)으로 설정해서 루프를 세팅
-         * 
-        */
+
         if (HasLoop() && source.time >= this.checkTime[this.currentLoop])
         {
             source.time = this.setTime[this.currentLoop];

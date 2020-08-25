@@ -10,7 +10,7 @@ public class DataManager : MonoBehaviour
 {
     #region Variable
     private static EffectData effectData = null;
-
+    private static SoundData soundData = null;
     #endregion Variable
 
     #region Method
@@ -21,6 +21,12 @@ public class DataManager : MonoBehaviour
         {
             effectData = ScriptableObject.CreateInstance<EffectData>();
             effectData.LoadData();
+        }
+
+        if (soundData == null)
+        {
+            soundData = ScriptableObject.CreateInstance<SoundData>();
+            soundData.LoadData();
         }
     }
 
@@ -33,6 +39,17 @@ public class DataManager : MonoBehaviour
         }
 
         return effectData;
+    }
+
+    public static SoundData SoundData()
+    {
+        if (soundData == null)
+        {
+            soundData = ScriptableObject.CreateInstance<SoundData>();
+            soundData.LoadData();
+        }
+
+        return soundData;
     }
 
     #endregion Method

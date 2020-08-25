@@ -94,7 +94,7 @@ public class SoundTool : EditorWindow
                                     sound.rolloffMode = (AudioRolloffMode)EditorGUILayout.EnumPopup("volume Rolloff", sound.rolloffMode, GUILayout.Width(uiWidthLarge));
                                     sound.minDistance = EditorGUILayout.FloatField("min Distance", sound.minDistance, GUILayout.Width(uiWidthLarge));
                                     sound.maxDistance = EditorGUILayout.FloatField("max Distance", sound.maxDistance, GUILayout.Width(uiWidthLarge));
-                                    sound.spartialBlend = EditorGUILayout.Slider("PanLevel", sound.spartialBlend, 0.0f, 1.0f, GUILayout.Width(uiWidthLarge));
+                                    sound.spatialBlend = EditorGUILayout.Slider("PanLevel", sound.spatialBlend, 0.0f, 1.0f, GUILayout.Width(uiWidthLarge));
 
                                 }
                                 else //불러오기 실패
