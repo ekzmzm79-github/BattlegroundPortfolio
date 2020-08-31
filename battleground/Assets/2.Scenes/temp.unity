@@ -332,8 +332,43 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &947710073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947710069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cabf3729ddfd9f469797977a6c51b9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 0.15
+  runSpeed: 1
+  sprintSpeed: 2
+  speedDampTime: 0.1
+  jumpHeight: 1.5
+  jumpInertialForce: 10
+  speed: 0
+  speedSeeker: 0
+--- !u!114 &947710074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947710069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0523d8f05e340f94c9f25a902a82ba0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCamera: {fileID: 856437728}
+  turnSmoothing: 0.06
+  sprintFOV: 100
 --- !u!1 &1148697325
 GameObject:
   m_ObjectHideFlags: 0

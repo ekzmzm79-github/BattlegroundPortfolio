@@ -258,7 +258,7 @@ public class BehaviourController : MonoBehaviour
         return false;
     }
 
-    public bool InOverriding(GenericBehaviour behaviour = null)
+    public bool IsOverriding(GenericBehaviour behaviour = null)
     {
         if(behaviour == null)
         {
@@ -299,6 +299,7 @@ public class BehaviourController : MonoBehaviour
     public void SetLastDirection(Vector3 direction)
     {
         this.lastDirection = direction;
+
     }
 
     #endregion Method
