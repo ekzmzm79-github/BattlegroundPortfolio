@@ -29,6 +29,9 @@ public class MoveBehaviour : GenericBehaviour
 
     #endregion Variable
 
+    #region Method
+    
+
     private void Start()
     {
         myTransform = transform;
@@ -153,7 +156,8 @@ public class MoveBehaviour : GenericBehaviour
                 RemoveVecticalVelocity();
                 float velocity = 2f * Mathf.Abs(Physics.gravity.y) * jumpHeight;
                 velocity = Mathf.Sqrt(velocity);
-                behaviourController.GetRigidbody.AddForce(Vector3.up, ForceMode.VelocityChange);
+                behaviourController.GetRigidbody.AddForce(Vector3.up * velocity, 
+                    ForceMode.VelocityChange);
             }
             
         }
@@ -195,5 +199,7 @@ public class MoveBehaviour : GenericBehaviour
         MovementManagement(behaviourController.GetH, behaviourController.GetV);
         JumpManagement();
     }
+
+    #endregion Method
 
 }
