@@ -70,6 +70,7 @@ public class SoundData : BaseData
                 xml.WriteElementString("checktime", str);
 
                 str = "";
+                xml.WriteElementString("settimecount", clip.setTime.Length.ToString());
                 foreach (float t in clip.setTime)
                 {
                     //시간 별로 '/' 문자로 구분되어서 저장
@@ -88,7 +89,7 @@ public class SoundData : BaseData
     public void LoadData()
     {
         this.xmlFilePath = Application.dataPath + dataDirectory;
-        TextAsset asset = ResourceManager.Load(dataPath) as TextAsset;
+        TextAsset asset = (TextAsset)Resources.Load(dataPath, typeof(TextAsset));
         if (asset == null || asset.text == null)
         {
             this.AddData("NewSound");
@@ -153,6 +154,9 @@ public class SoundData : BaseData
                         case "clippath":
                             soundClips[currentID].clipPath = reader.ReadString();
                             break;
+                        case "clipname":
+                            soundClips[currentID].clipName = reader.ReadString();
+                            break;
                         case "checktimecount":
                             break;
                         case "checktime":
@@ -207,12 +211,12 @@ public class SoundData : BaseData
     {
         if (this.names == null)
         {
-            this.names = new string[] { name }; //아무 이름
+            this.names = new string[] { newName };
             this.soundClips = new SoundClip[] { new SoundClip() };
         }
         else
         {
-            this.names = ArrayHelper.Add(name, this.names);
+            this.names = ArrayHelper.Add(newName, this.names);
             this.soundClips = ArrayHelper.Add(new SoundClip(), this.soundClips);
         }
 

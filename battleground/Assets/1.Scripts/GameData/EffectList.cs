@@ -8,5 +8,9 @@ public enum EffectList
 	
      bulletHole = 0,
      flash = 1,
+     hitEffetct = 2,
+     shotEffect = 3,
+     sparks = 4,
+     tracer = 5,
 
 }

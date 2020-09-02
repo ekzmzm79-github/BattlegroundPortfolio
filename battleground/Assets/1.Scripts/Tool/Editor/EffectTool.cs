@@ -35,7 +35,7 @@ public class EffectTool : EditorWindow
     {
         if(effectData == null)
         {
-            Debug.LogError("EffectTool/OnGUI Error! effectData is null");
+            //Debug.LogError("EffectTool/OnGUI Error! effectData is null");
             return;
         }
 

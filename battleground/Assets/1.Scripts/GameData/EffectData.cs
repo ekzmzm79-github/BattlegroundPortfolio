@@ -136,7 +136,7 @@ public class EffectData : BaseData
         }
         else
         {
-            this.names = ArrayHelper.Add(name, this.names);
+            this.names = ArrayHelper.Add(newName, this.names);
             this.effectClips = ArrayHelper.Add(new EffectClip(), this.effectClips);
         }
 

@@ -20,7 +20,7 @@ public class ResourceManager
         UnityObject retObject = Resources.Load(path);
         if(retObject == null)
         {
-            Debug.LogError("ResourceManager/Load Error! path = " + path);
+            //Debug.LogError("ResourceManager/Load Error! path = " + path);
             return null;
         }
         return retObject;

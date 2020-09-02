@@ -41,7 +41,7 @@ public class SoundTool : EditorWindow
     {
         if (soundData == null)
         {
-            Debug.LogError("SoundTool/OnGUI Error! soundData is null");
+            //Debug.LogError("SoundTool/OnGUI Error! soundData is null");
             return;
         }
 
@@ -50,13 +50,15 @@ public class SoundTool : EditorWindow
             UnityObject source = soundSource; //AudioClip -> UnityObject 박싱
             EditorHelper.EditorToolTopLayer(soundData, ref selection, ref source, this.uiWidthMiddle);
             soundSource = source as AudioClip; // UnityObject-> AudioClip 언박싱
-            SoundClip sound = soundData.soundClips[selection];
+            
 
             EditorGUILayout.BeginHorizontal();
             {
                 // 중간 데이터 리스트 레이아웃
                 EditorHelper.EditorToolListLayer(ref SP1, soundData, ref selection, ref source, this.uiWidthMiddle);
+                SoundClip sound = soundData.soundClips[selection];
                 soundSource = source as AudioClip;
+                
 
                 EditorGUILayout.BeginVertical();
                 {
@@ -79,12 +81,12 @@ public class SoundTool : EditorWindow
                                 if (soundSource == null && sound.clipName != string.Empty)
                                 {
                                     //full path 사용해볼것
-                                    soundSource = Resources.Load(soundData.soundClips[selection].clipPath + soundData.soundClips[selection].clipName) as AudioClip;
+                                    soundSource = Resources.Load(sound.clipPath + sound.clipName) as AudioClip;
 
                                    //sound.PreLoad();
                                 }
 
-                                soundSource = (AudioClip)EditorGUILayout.ObjectField("Audio Clip", soundSource, typeof(AudioClip), false, GUILayout.Width(uiWidthLarge));
+                                this.soundSource = (AudioClip)EditorGUILayout.ObjectField("Audio Clip", this.soundSource, typeof(AudioClip), false, GUILayout.Width(uiWidthLarge));
                                 if (soundSource != null) //불러오기 성공 -> 경로와 이름 세팅
                                 {
                                     sound.clipPath = EditorHelper.GetPath(soundSource);
@@ -120,7 +122,7 @@ public class SoundTool : EditorWindow
                                             sound.RemoveLoop(i);
                                             return;
                                         }
-
+                                        sound = soundData.soundClips[selection];
                                         sound.checkTime[i] = EditorGUILayout.FloatField("check Time", sound.checkTime[i], GUILayout.Width(uiWidthMiddle));
                                         sound.setTime[i] = EditorGUILayout.FloatField("set Time", sound.setTime[i], GUILayout.Width(uiWidthMiddle));
                                     }
@@ -152,7 +154,7 @@ public class SoundTool : EditorWindow
             }
             if (GUILayout.Button("Save"))
             {
-                SoundTool.soundData.SaveData();
+                soundData.SaveData();
                 CreateEnumStructure();
                 AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
             }
