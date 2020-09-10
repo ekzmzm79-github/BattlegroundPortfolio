@@ -51,10 +51,10 @@ public class ShootBehaviour : GenericBehaviour
 
     // IK를 위한 변수들
     private Transform hips, spine, chest, rightHand, leftArm; 
-    private Vector3 initialRootRoatation;
-    private Vector3 initialHipsRoatation;
-    private Vector3 initialSpineRoatation;
-    private Vector3 initialChestRoatation;
+    private Vector3 initialRootRotation;
+    private Vector3 initialHipsRotation;
+    private Vector3 initialSpineRotation;
+    private Vector3 initialChestRotation;
 
     private float shotInterval, originalShotInterval = 0.5f;
     private List<GameObject> bulletHoles; // 피탄 이펙트가 표시될 오브젝트들
@@ -103,10 +103,10 @@ public class ShootBehaviour : GenericBehaviour
         rightHand = this.behaviourController.GetAnimator.GetBoneTransform(HumanBodyBones.RightHand);
         leftArm = this.behaviourController.GetAnimator.GetBoneTransform(HumanBodyBones.LeftUpperArm);
 
-        initialRootRoatation = (hips.parent == transform) ? Vector3.zero : hips.parent.localEulerAngles;
-        initialHipsRoatation = hips.localEulerAngles;
-        initialSpineRoatation = spine.localEulerAngles;
-        initialChestRoatation = chest.localEulerAngles;
+        initialRootRotation = (hips.parent == transform) ? Vector3.zero : hips.parent.localEulerAngles;
+        initialHipsRotation = hips.localEulerAngles;
+        initialSpineRotation = spine.localEulerAngles;
+        initialChestRotation = chest.localEulerAngles;
         originalCorssHair = aimBehaviour.crossHair;
         shotInterval = originalShotInterval;
         castRelativeOrigin = neck.position - transform.position; //
@@ -426,9 +426,9 @@ public class ShootBehaviour : GenericBehaviour
 
             //캐릭터 자체의 기울임 -> spine 조절
             Quaternion targetRot = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-            targetRot *= Quaternion.Euler(initialRootRoatation);
-            targetRot *= Quaternion.Euler(initialHipsRoatation);
-            targetRot *= Quaternion.Euler(initialSpineRoatation);
+            targetRot *= Quaternion.Euler(initialRootRotation);
+            targetRot *= Quaternion.Euler(initialHipsRotation);
+            targetRot *= Quaternion.Euler(initialSpineRotation);
             behaviourController.GetAnimator.SetBoneLocalRotation(HumanBodyBones.Spine,
                 Quaternion.Inverse(hips.rotation) * targetRot);
 
@@ -442,7 +442,7 @@ public class ShootBehaviour : GenericBehaviour
             }
 
             targetRot *= spine.rotation;
-            targetRot *= Quaternion.Euler(initialChestRoatation);
+            targetRot *= Quaternion.Euler(initialChestRotation);
             behaviourController.GetAnimator.SetBoneLocalRotation(HumanBodyBones.Chest, 
                 Quaternion.Inverse(spine.rotation) * targetRot);
 

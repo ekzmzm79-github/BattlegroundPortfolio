@@ -16,7 +16,7 @@ public class StateController : MonoBehaviour
     public GeneralStats generalStats;
     public ClassStats statData;
     public string classID = string.Empty; // PISTOL, RIFLE, AK
-
+    //classID는 한번 정해지면 바뀌지 않는다.
     public ClassStats.Param classStats
     {
         get
@@ -95,13 +95,39 @@ public class StateController : MonoBehaviour
         get
         {
             // GetInstanceID 와 GetHashCode 둘다 유사하게 해당 객체 고유의 인스턴스 id를 리턴하지만
-            // GetHashCode 는 단순 변수나 문자열의 인스턴스 id는 유일하지 않다.
-            // why GetHashCode()? not GetInstanceID() : 
+            // GetHashCode 는 단순 변수나 문자열의 인스턴스 id는 유일하지 않다. 
             return coverSpot[this.GetHashCode()];
         }
         set { coverSpot[this.GetHashCode()] = value; }
         
     }
+
+    public bool Strafing
+    {
+        get => strafing;
+        set
+        {
+            enemyAnimation.anim.SetBool("Strafe", value);
+            strafing = value;
+        }
+    }
+
+    public bool Aiming
+    {
+        get => aiming;
+        set
+        {
+            if(aiming != value)
+            {
+                enemyAnimation.anim.SetBool("Aim", value);
+                aiming = value;
+            }
+        }
+    }
+
+    #endregion Variable
+
+    #region Method
 
     public void TransitionToState(State nextState, Decision decision)
     {
@@ -110,6 +136,19 @@ public class StateController : MonoBehaviour
             currentState = nextState;
         }
     }
+    /// <summary>
+    /// 자연스러운 회전-> 사격모션의 연결을 위해서 조준 동작에 딜레이를 준다
+    /// EnemyAnimation 보간용
+    /// </summary>
+    public IEnumerator UnstuckAim(float delay)
+    {
+        yield return new WaitForSeconds(delay * 0.5f);
+        Aiming = false;
+        yield return new WaitForSeconds(delay * 0.5f);
+        Aiming = true;
+    }
 
-    #endregion Variable
+    #endregion Method
+
+
 }
