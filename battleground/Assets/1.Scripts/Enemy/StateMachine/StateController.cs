@@ -81,7 +81,7 @@ public class StateController : MonoBehaviour
     private int magBullets; // 잔탄량
     private bool aiActive;
 
-    private static Dictionary<int, Vector3> coverSpot; // 각 cover의 위치를 모아둔 static dictionary
+    private static Dictionary<int, Vector3> coverSpot; // 각 cover의 위치? + 해당 커버를 쓰고있는 객체 InstanceID
     private bool strafing; // 움직이면서 플레이어를 조준하는 중이냐?
     private bool aiming;
     private bool checkedOnLoop, blockedSight;
@@ -146,6 +146,123 @@ public class StateController : MonoBehaviour
         Aiming = false;
         yield return new WaitForSeconds(delay * 0.5f);
         Aiming = true;
+    }
+
+
+    private void Awake()
+    {
+        if(coverSpot == null)
+        {
+            coverSpot = new Dictionary<int, Vector3>();
+        }
+        coverSpot[this.GetHashCode()] = Vector3.positiveInfinity; // 미세팅 혹은 못찾았다는 의미 값
+        nav = GetComponent<NavMeshAgent>();
+        aiActive = true;
+        enemyAnimation = gameObject.AddComponent<EnemyAnimation>();
+        magBullets = bullets;
+        variables.shotInRounds = maximumBurst;
+
+        nearRaius = perceptionRadius * 0.5f; // 기본값
+        GameObject gameController = GameObject.FindGameObjectWithTag("GameController");
+        coverLookUp = gameController.GetComponent<CoverLookUp>();
+        if(coverLookUp == null)
+        {
+            coverLookUp = gameController.AddComponent<CoverLookUp>();
+            coverLookUp.Setup(generalStats.coverMask);
+        }
+
+        //GetComponent가 실패하면 오류메세지 출력
+        Debug.Assert(aimTarget.root.GetComponent<HealthBase>(),
+            "타겟에는 반드시 생명력 컴포넌트를 추가해야합니다.");
+    }
+
+    private void Start()
+    {
+        currentState.OnEnableActions(this);
+    }
+    private void Update()
+    {
+        checkedOnLoop = false;
+
+        if(!aiActive)
+        {
+            return;
+        }
+
+        currentState.DoAction(this);
+        currentState.CheckTransitions(this);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if(currentState != null)
+        {
+            Gizmos.color = currentState.sceneGizmoColor;
+            Gizmos.DrawWireSphere(transform.position + Vector3.up * 2.5f, 2f);
+        }
+    }
+
+    public void EndReloadWeapon()
+    {
+        reloading = false;
+        bullets = magBullets;
+    }
+
+    /// <summary>
+    /// AlertChecker에서 사용할 예정인 SendMessage용 메소드
+    /// </summary>
+    public void AlertCallback(Vector3 target)
+    {
+        if(!aimTarget.root.GetComponent<HealthBase>().IsDead)
+        {
+            this.variables.hearAlert = true;
+            this.personalTarget = target;
+        }
+    }
+
+    public bool IsNearOtherSpot(Vector3 spot, float margin = 1f)
+    {
+        foreach(KeyValuePair<int, Vector3> usedSpot in coverSpot)
+        {
+            if(usedSpot.Key != gameObject.GetHashCode() && 
+                Vector3.Distance(spot, usedSpot.Value) <= margin)
+            {
+                // 목표 Spot에 거의 도착했다는 의미
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool BlockedSight()
+    {
+        if(!checkedOnLoop)
+        {
+            checkedOnLoop = true;
+            Vector3 target = default;
+            try
+            {
+                target = aimTarget.position;
+            }
+            catch(UnassignedReferenceException)
+            {
+                Debug.LogError("조준 타겟을 지정해주세요. " + transform.name);
+            }
+
+            Vector3 castOrigin = transform.position + Vector3.up * generalStats.aboveCoverHeight;
+            Vector3 dirToTarget = target - castOrigin;
+
+            blockedSight = Physics.Raycast(castOrigin, dirToTarget, out RaycastHit hit, dirToTarget.magnitude,
+                generalStats.coverMask | generalStats.obstacleMask);
+        }
+
+        return blockedSight;
+    }
+
+    private void OnDestroy()
+    {
+        coverSpot.Remove(this.GetHashCode());
     }
 
     #endregion Method

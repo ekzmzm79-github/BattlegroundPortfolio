@@ -14,8 +14,8 @@ public class CoverLookUp : MonoBehaviour
     private List<Vector3[]> allCoverSpots;
     private GameObject[] covers;
     private List<int> coverHashCodes; //cover unity ID;
-    // 필터링을 위한 coverSpots -> 이 dic에 포함된 것은 필터링
-    private Dictionary<float, Vector3> filteredSpots;
+    
+    private Dictionary<float, Vector3> filteredSpots; // 이미 필터링 된 Spot들
 
     #endregion Variable
     #region Method
@@ -161,7 +161,6 @@ public class CoverLookUp : MonoBehaviour
             {
                 Vector3 vectorDist = controller.personalTarget - spot; //spot -> player로 향하는 벡터
                 float searchDist = (controller.transform.position - spot).sqrMagnitude; // spot에서 Enemy까지의 거리
-
 
                 /* 
                  * vectorDist 크기(spot -> player 벡터 크기)가 보이는 범위 크기보다 작거나 같고
