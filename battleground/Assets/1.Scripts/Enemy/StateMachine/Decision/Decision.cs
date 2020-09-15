@@ -29,6 +29,7 @@ public abstract class Decision : ScriptableObject
                 Physics.OverlapSphere(controller.transform.position, radius,
                 controller.generalStats.targetMask); // 해당 OverlapSphere에 검출된 collider들 반환
             return handleTargets(controller, targetsInRadius.Length > 0, targetsInRadius);
+            // targetsInRadius.Length > 0 : 플레이어를 찾았다는 의미
             //HandleTargets(StateController controller, bool hasTargets, Collider[] targetInRadius);
 
         }

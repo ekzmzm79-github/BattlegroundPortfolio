@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//CreateAssetMenu : 해당 클래스를 어셋화 시킬 수 있음
 [CreateAssetMenu(menuName = "PluggableAI/GeneralStats")]
 
 //ScriptableObject 
