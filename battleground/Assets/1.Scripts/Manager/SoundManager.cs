@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -563,6 +564,18 @@ public class SoundManager : SingletonMonobehaviour<SoundManager>
         StopAllCoroutines();
 
     }
+
+    /// <summary>
+    /// Enemy의 클래스에 따라 사격 사운드를 교체
+    /// </summary>
+    public void PlayShotSound(string ClassID, Vector3 position, float volume)
+    {
+        //classID를 SoundList로 캐스팅하고(string to enum)
+        //해당 sound를 PlayOneShotEffect 함수에 인자로 전달해서(enum to int) 재생
+        SoundList sound = (SoundList)Enum.Parse(typeof(SoundList), ClassID.ToLower());
+        PlayOneShotEffect((int)sound, position, volume);
+    }
+
 
     #endregion Method
 }

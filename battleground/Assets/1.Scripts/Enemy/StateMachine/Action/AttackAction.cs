@@ -28,7 +28,7 @@ public class AttackAction : Action
     }
 
     /// <summary>
-    /// 사격을 위한 함수
+    /// 실제 사격을 위한 함수
     /// </summary>
     /// <param name="stateController">Enemy</param>
     /// <param name="direction">사격 방향</param>
@@ -73,17 +73,107 @@ public class AttackAction : Action
             }
         }
 
-        //사운드 재생 : SoundList.pistol 추후에 수정 요망 
         // (현재 Enemy가 가진 무기 종류에 따라 사운드 재생)
-        SoundManager.Instance.PlayOneShotEffect((int)SoundList.pistol, 
+        SoundManager.Instance.PlayShotSound(controller.classID,
             controller.enemyAnimation.gunMuzzle.position, 2f);
 
     }
 
+    /// <summary>
+    /// 오발률을 포함해서 발사 위치와 방향을 세팅하고 DoShot 실행
+    /// </summary>
+    private void CastShot(StateController controller)
+    {
+        /* imprecision : 부정확,
+         * Enemy가 사격시마다 랜덤적으로 오발률을 만들어서 발사 위치를 랜덤하게 결정
+         * (약간 오른쪽 + 위쪽)
+         */ 
+        Vector3 imprecision = Random.Range(-controller.classStats.ShotErrorRate, controller.classStats.ShotErrorRate) *
+            controller.transform.right;
+        imprecision += Random.Range(-controller.classStats.ShotErrorRate, controller.classStats.ShotErrorRate) *
+            controller.transform.up;
 
+        //발사 방향 세팅
+        Vector3 shotDirection = controller.personalTarget - controller.enemyAnimation.gunMuzzle.position;
+        shotDirection = shotDirection.normalized + imprecision; //오발률 더하기
+        Ray ray = new Ray(controller.enemyAnimation.gunMuzzle.position, shotDirection);
+        if(Physics.Raycast(ray, out RaycastHit hit, controller.viewRadius, controller.generalStats.shotMask.value))
+        {
+            // 0이 아니라면 orgaic에 해당함
+            bool isOrganic = ((1 << hit.transform.root.gameObject.layer) & controller.generalStats.targetMask) != 0;
+            DoShot(controller, ray.direction, hit.point, hit.normal, isOrganic, hit.transform);
+        }
+        else
+        {
+            //orgaic에 맞지 않았다면 -> 허공을 맞추는것과 마찬가지이므로 3번째 인자 임읠 지정
+            DoShot(controller, ray.direction, ray.origin + (ray.direction * 500f));
+        }
+    }
+
+    /// <summary>
+    /// 현재 발사 가능한 상태인가를 체크
+    /// </summary>
+    private bool CanShoot(StateController controller)
+    {
+        float distance = (controller.personalTarget -
+            controller.enemyAnimation.gunMuzzle.position).sqrMagnitude;
+        if(controller.Aiming &&
+            (controller.enemyAnimation.currentAimingAngleGap < aimAngleGap ||
+            distance <= 5.0f))
+        {
+            /* 현재 조준 중이고,
+             * (현재 각도 차이가 aimAngleGap보다 작거나 거리가 5.0 이하라면)
+             */
+            if(controller.variables.startShootTimer >=startShootDelay)
+            {
+                // 딜레이 시간이상 대기했음
+                return true;
+            }
+            else
+            {
+                controller.variables.startShootTimer += Time.deltaTime; // 한 프레임 시간만큼 더해주기
+            }
+        }
+
+        return false;
+    }
+
+
+    /// <summary>
+    /// 발사 딜레이 타임을 체크해서 CastShot을 실행
+    /// </summary>
+    private void Shoot(StateController controller)
+    {
+        if(Time.timeScale > 0 && controller.variables.shotTimer == 0f)
+        {
+            //발사 처리
+            controller.enemyAnimation.anim.SetTrigger(FC.AnimatorKey.Shooting);
+            CastShot(controller);
+        }
+        else if(controller.variables.shotTimer >= (0.1f + 2f * Time.deltaTime))
+        {
+            // (0.1f * 2f * Time.deltaTime) : 임의로 정한 딜레이 타임
+            // 애니메이션 재생을 위한 시간이 따로 필요해서 약간의 텀을 두고 castshot을 실행함
+            controller.bullets = Mathf.Max(--controller.bullets, 0);
+            controller.variables.currentShots++;
+            controller.variables.shotTimer = 0;
+            return;
+        }
+        // 아직 딜레이 타임이므로 shot 불가 및 shotTimer에 시간 더해주기
+        controller.variables.shotTimer += controller.classStats.ShotRateFactor * Time.deltaTime;
+    }
+    
+    // Act: (CanShoot 체크) -> Shoot(딜레이타임) -> CastShot(위치 및 방향 확정) -> DoShot(사격 이펙트 생성 및 피격)
     public override void Act(StateController controller)
     {
-        
+        controller.focusSight = true;
+
+        if(CanShoot(controller))
+        {
+            Shoot(controller);
+        }
+
+        controller.variables.blindEngageTimer += Time.deltaTime;
     }
 }
 
