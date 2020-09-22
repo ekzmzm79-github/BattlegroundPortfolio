@@ -14,7 +14,7 @@ public class CoverLookUp : MonoBehaviour
     private List<Vector3[]> allCoverSpots;
     private GameObject[] covers;
     private List<int> coverHashCodes; //cover unity ID;
-    
+
     private Dictionary<float, Vector3> filteredSpots; // 이미 필터링 된 Spot들
 
     #endregion Variable
@@ -27,9 +27,9 @@ public class CoverLookUp : MonoBehaviour
     private GameObject[] GetObjectsInLayerMask(int layerMask)
     {
         List<GameObject> ret = new List<GameObject>();
-        foreach(GameObject go in Resources.FindObjectsOfTypeAll<GameObject>())
+        foreach (GameObject go in Resources.FindObjectsOfTypeAll<GameObject>())
         {
-            if(go.activeInHierarchy && layerMask == (layerMask | (1 << go.layer)))
+            if (go.activeInHierarchy && layerMask == (layerMask | (1 << go.layer)))
             {
                 ret.Add(go);
             }
@@ -114,7 +114,7 @@ public class CoverLookUp : MonoBehaviour
 
         coverHashCodes = new List<int>();
         allCoverSpots = new List<Vector3[]>();
-        foreach(GameObject cover in covers)
+        foreach (GameObject cover in covers)
         {
             allCoverSpots.Add(GetSpots(cover, coverMask));
             coverHashCodes.Add(cover.GetHashCode());
@@ -131,11 +131,11 @@ public class CoverLookUp : MonoBehaviour
         Vector3 dirToTarget = (target - origin).normalized; // 타겟으로 향하는 벡터
         Vector3 dirToSpot = (spot - origin).normalized; // 스팟으로 향하는 벡터
 
-        if(Vector3.Angle(dirToSpot, dirToTarget) <= angle) // 두 벡터 사이의 각도가 angle보다 작냐?
+        if (Vector3.Angle(dirToSpot, dirToTarget) <= angle) // 두 벡터 사이의 각도가 angle보다 작냐?
         {
             float targetDist = (target - origin).sqrMagnitude; // == Vector3.Distance()
             float spotDist = (spot - origin).sqrMagnitude;
-            return targetDist <= spotDist; // 타겟이 스팟보다 가깝거나 같다면 true
+            return (targetDist <= spotDist); // 타겟이 스팟보다 가깝거나 같다면 true
         }
 
         return false;
@@ -157,7 +157,7 @@ public class CoverLookUp : MonoBehaviour
                 // false 상태인 cover이거나 이미 coverHashCodes에 추가한 것이라면
                 continue;
             }
-            foreach(Vector3 spot in allCoverSpots[i])
+            foreach (Vector3 spot in allCoverSpots[i])
             {
                 Vector3 vectorDist = controller.personalTarget - spot; //spot -> player로 향하는 벡터
                 float searchDist = (controller.transform.position - spot).sqrMagnitude; // spot에서 Enemy까지의 거리
@@ -190,9 +190,9 @@ public class CoverLookUp : MonoBehaviour
                         }
 
 
-                        if(minDist > searchDist)
+                        if (minDist > searchDist)
                         {
-                            searchDist = minDist;
+                            minDist = searchDist;
                             nextCoverHash = coverHashCodes[i];
                         }
 
@@ -221,7 +221,7 @@ public class CoverLookUp : MonoBehaviour
         float minDist = (float)nextCoverData[1];
 
         ArrayList returnArray = new ArrayList();
-        if(filteredSpots.Count == 0)
+        if (filteredSpots.Count == 0)
         {
             //cover를 하나도 못 찾았다는 뜻이므로 무시할 값을 add
             returnArray.Add(-1);

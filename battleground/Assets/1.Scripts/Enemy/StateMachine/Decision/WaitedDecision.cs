@@ -22,6 +22,6 @@ public class WaitedDecision : Decision
 
     public override bool Decide(StateController controller)
     {
-        return (startTime - Time.time) >= timeToWait;
+        return (Time.time - startTime) >= timeToWait;
     }
 }

@@ -114,10 +114,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 909, y: 442}
-  m_MaxSize: {x: 22004, y: 10021}
+  m_MinSize: {x: 911, y: 442}
+  m_MaxSize: {x: 22006, y: 10021}
   vertical: 0
-  controlID: 110
+  controlID: 14344
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -142,7 +142,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 37
+  controlID: 14216
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -218,8 +218,8 @@ MonoBehaviour:
     y: 0
     width: 304
     height: 947
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -407,9 +407,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 18.20685, y: 0.4925642, z: 6.3043327}
+    m_Target: {x: 18.866396, y: 0.053744793, z: 5.311982}
     speed: 2
-    m_Value: {x: 18.20685, y: 0.4925642, z: 6.3043327}
+    m_Value: {x: 18.866396, y: 0.053744793, z: 5.311982}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -455,13 +455,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.082891285, y: 0.909918, z: -0.22122584, w: -0.34093836}
+    m_Target: {x: -0.03027431, y: 0.96826893, z: -0.14633927, w: -0.20031334}
     speed: 2
-    m_Value: {x: -0.08322297, y: 0.90940493, z: -0.22110109, w: -0.34230262}
+    m_Value: {x: -0.03027428, y: 0.96826804, z: -0.14633913, w: -0.20031315}
   m_Size:
-    m_Target: 6.7168055
+    m_Target: 4.614548
     speed: 2
-    m_Value: 6.4168053
+    m_Value: 4.614548
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -803,23 +803,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: de410000
-      m_LastClickedID: 16862
-      m_ExpandedIDs: 58a5ffff6afbffff
+      m_SelectedIDs: e8410000
+      m_LastClickedID: 16872
+      m_ExpandedIDs: 06ddffff66ddffffaaddffffb2ddffffb8ddffffbcddffffc0ddffffceddffffd6ddffffe2ddffffe8ddffffecddfffff0ddfffffcddffff04deffff16deffff3adeffff6afbffff783e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: WayPoint1
-        m_OriginalName: WayPoint1
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -23424
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 9}
       m_SearchString: 
@@ -868,7 +868,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/9.ResourcesData/Resources/FSM/States
+    - Assets/1.Scripts/Player
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -880,7 +880,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 2a340000
     m_LastClickedID: 13354
-    m_ExpandedIDs: 00000000fe67000000680000026800000468000006680000086800000a6800000c6800000e68000010680000126800001468000016680000186800001a6800001c6800001e68000020680000226800002468000026680000286800002a6800002c6800002e680000306800003268000034680000
+    m_ExpandedIDs: ffffffff000000007c5400002e68000030680000326800003468000036680000386800003a6800003c6800003e68000040680000426800004468000046680000486800004a6800004c6800004e680000526800005468000056680000586800005a6800005c6800005e6800006068000062680000646800006668000068680000a2680000a6680000b2680000b8680000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -905,24 +905,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 900}
+    scrollPos: {x: 0, y: 540}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000fe67000000680000026800000468000006680000086800000a6800000c6800000e68000010680000126800001468000016680000186800001a6800001c6800001e68000020680000226800002468000026680000286800002a6800002c6800003068000032680000346800004c6800004e68000062680000
+    m_ExpandedIDs: ffffffff000000007c5400002e68000030680000326800003468000036680000386800003a6800003c6800003e68000040680000426800004468000046680000486800004a6800004c6800004e680000526800005468000056680000586800005a6800005c6800005e6800006068000062680000646800006668000068680000a2680000a6680000b2680000b8680000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Transition
-      m_OriginalName: Transition
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 11286
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 

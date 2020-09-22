@@ -21,19 +21,20 @@ public class StateController : MonoBehaviour
     {
         get
         {
+            /*
             if(this.classID != string.Empty)
             {
                 return this.classStats;
             }
-
+            */
             foreach(ClassStats.Sheet sheet in statData.sheets)
             {
                 foreach(ClassStats.Param param in sheet.list)
                 {
                     if(param.ID.Equals(this.classID))
                     {
-                        classID = param.ID;
-                        classStats = param;
+                        //classID = param.ID;
+                        //classStats = param;
                         return param;
                     }
                 }
@@ -41,11 +42,12 @@ public class StateController : MonoBehaviour
 
             return null;
         }
-
+        /*
         set
         {
             classStats = value;
         }
+        */
     }
 
     public State currentState;

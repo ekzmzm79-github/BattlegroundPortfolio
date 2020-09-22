@@ -197,7 +197,7 @@ public class ShootBehaviour : GenericBehaviour
                         !isOrganic, !isOrganic);
                     if(hit.collider)
                     {
-                        hit.collider.SendMessageUpwards("HitCallback", new HealthBase.DamageInfo(
+                        hit.collider.SendMessageUpwards("HitCallBack", new HealthBase.DamageInfo(
                             hit.point, ray.direction, weapons[weaponIdx].bulletDamage, hit.collider),
                             SendMessageOptions.DontRequireReceiver);
                     }
