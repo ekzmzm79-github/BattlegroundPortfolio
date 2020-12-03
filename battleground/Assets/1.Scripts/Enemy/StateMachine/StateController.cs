@@ -68,7 +68,7 @@ public class StateController : MonoBehaviour
     [HideInInspector] public NavMeshAgent nav;
     [HideInInspector] public int wayPointeIndex;
     [HideInInspector] public int maximumBurst = 7; //유효한 총알 개수
-    [HideInInspector] public float blindEngageTime = 30f; // 대상이 시야에서 사라진 뒤에도 유지하며 타겟을 찾는 시간
+    [HideInInspector] public float blindEngageTime = 5f; // 대상이 시야에서 사라진 뒤에도 유지하며 타겟을 찾는 시간
 
     [HideInInspector] public bool targetInSight;
     [HideInInspector] public bool focusSight;
@@ -144,15 +144,21 @@ public class StateController : MonoBehaviour
     /// </summary>
     public IEnumerator UnstuckAim(float delay)
     {
-        yield return new WaitForSeconds(delay * 0.5f);
+        yield return new WaitForSeconds(delay * 1.0f);
         Aiming = false;
-        yield return new WaitForSeconds(delay * 0.5f);
+        yield return new WaitForSeconds(delay * 1.0f);
         Aiming = true;
     }
 
 
     private void Awake()
     {
+        if(aimTarget != null)
+        {
+            aimTarget.transform.position = 
+                new Vector3(aimTarget.transform.position.x, aimTarget.transform.position.y + 1.0f, aimTarget.transform.position.z);
+        }
+
         if(coverSpot == null)
         {
             coverSpot = new Dictionary<int, Vector3>();
@@ -200,7 +206,7 @@ public class StateController : MonoBehaviour
         if(currentState != null)
         {
             Gizmos.color = currentState.sceneGizmoColor;
-            Gizmos.DrawWireSphere(transform.position + Vector3.up * 2.5f, 2f);
+            Gizmos.DrawSphere(transform.position + Vector3.up * 2.5f, 0.5f);
         }
     }
 
@@ -222,7 +228,7 @@ public class StateController : MonoBehaviour
         }
     }
 
-    public bool IsNearOtherSpot(Vector3 spot, float margin = 1f)
+    public bool IsNearOtherSpot(Vector3 spot, float margin = 5f)
     {
         foreach(KeyValuePair<int, Vector3> usedSpot in coverSpot)
         {

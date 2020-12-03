@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class CursorManager : MonoBehaviour
 {
+    [SerializeField]
+    private bool cursorLock;
+
     private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        if (cursorLock)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        }
+        
     }
 }

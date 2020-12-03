@@ -119,7 +119,7 @@ public class AttackAction : Action
             controller.enemyAnimation.gunMuzzle.position).sqrMagnitude;
         if(controller.Aiming &&
             (controller.enemyAnimation.currentAimingAngleGap < aimAngleGap ||
-            distance <= 5.0f))
+            distance <= 200.0f)) // 상수값 제거하고 현재 가지고있는 무기 종류에따라 사정거리 변화주기
         {
             /* 현재 조준 중이고,
              * (현재 각도 차이가 aimAngleGap보다 작거나 거리가 5.0 이하라면)
@@ -150,7 +150,7 @@ public class AttackAction : Action
             controller.enemyAnimation.anim.SetTrigger(FC.AnimatorKey.Shooting);
             CastShot(controller);
         }
-        else if(controller.variables.shotTimer >= (0.1f + 2f * Time.deltaTime))
+        else if(controller.variables.shotTimer >= (0.1f + 3f * Time.deltaTime))
         {
             // (0.1f * 2f * Time.deltaTime) : 임의로 정한 딜레이 타임
             // 애니메이션 재생을 위한 시간이 따로 필요해서 약간의 텀을 두고 castshot을 실행함
